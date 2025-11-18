@@ -1,53 +1,49 @@
 # AOV_Archive
-AOV Archive is a structured archival release of the Arctic Observing Viewer (AOV) application and its supporting data ecosystem.
-The repository includes:
 
-The Main AOV Web Application – A React/HTML/CSS/JS map-driven interface.
+_AOV Archive is a structured archival release of the Arctic Observing Viewer (AOV) application and its supporting data ecosystem._
 
-Scripts – Python utilities for normalizing and preparing AOV datasets.
+---
 
-Related Tables – CSV tables linking AOV institutions and funding agencies to authoritative ROR (Research Organization Registry) identifiers.
+## 📦 Overview
 
-Unique Indexes – Curated CSV files listing all unique Agencies, Institutions, and Principal Investigators (PIs), including normalized names, alias lists, and ROR associations.
+This repository provides **everything needed to run, test, and understand the AOV visualization ecosystem**:
 
-This README provides a comprehensive overview of the project, including structure, development processes, data standards, and containerization/testing workflows.
+- **Main AOV Web Application** — React/HTML/CSS/JS map-driven interface.
+- **Python Scripts** — Utilities for normalizing and preparing AOV datasets.
+- **CSV Mapping Tables** — Authoritative ROR (Research Organization Registry) links for agencies & institutions.
+- **Unique Indexes** — Curated CSV files listing all unique Agencies, Institutions, and Principal Investigators, including normalized names and ROR associations.
 
-Table of Contents
+---
 
-Project Overview
+## 🗂️ Table of Contents
 
-Repository Structure
+- [Project Overview](#project-overview)
+- [Repository Structure](#repository-structure)
+- [Main AOV Application](#main-aov-application)
+- [Scripts (Python Utilities)](#scripts-python-utilities)
+- [Related Tables (CSV ROR Mappings)](#related-tables-csv-ror-mappings)
+- [Unique Indexes](#unique-indexes)
+- [Licensing](#licensing)
 
-Main AOV Application
+---
 
-Scripts (Python Utilities)
+## Project Overview
 
-Related Tables (CSV ROR Mappings)
+The AOV Archive repository preserves the full environment for the AOV visualization ecosystem.
 
-Unique Indexes
+- ⚛️ **React-based mapping application**
+- 🧪 **Automated testing** via Cypress
+- 🐳 **Dockerized build & test environments**
+- 🐍 **Python data-curation pipelines**
+- 📄 **Authoritative ROR mappings**
+- 🏷️ **Normalized indexes for core contributors** (PIs, Agencies, Institutions)
 
-Licensing
+---
 
-Project Overview
+## Repository Structure
 
-The AOV Archive repository preserves the full environment needed to run, test, and understand the AOV visualization ecosystem.
-It includes:
-
-A React-based mapping application
-
-Automated testing through Cypress
-
-Dockerized build & test environments
-
-Python data-curation pipelines
-
-Comprehensive mapping of institutions and agencies to ROR identifiers
-
-Normalized indexes for core contributors (PIs, Agencies, Institutions)
-
-Repository Structure
+```
 AOV-Archived/
-│
 ├── aov-app/                # Main AOV React/HTML/CSS/JS application
 │   ├── client/
 │   ├── cypress/
@@ -64,142 +60,143 @@ AOV-Archived/
 │   ├── institution_ROR.csv
 │   ├── agency_ROR.csv
 │
-├── unique_Tables/         # Unique normalized lists of names w/ ROR + aliases
+├── unique_Tables/          # Unique normalized lists of names w/ ROR + aliases
 │   ├── agency_Unique.csv
 │   ├── institution_Unique.csv
 │   ├── ORCID_Unique.csv
 │
 └── README.md
+```
 
-Main AOV Application
+---
 
+## Main AOV Application
 
-The AOV client application is a modern React-based mapping tool, tested with Cypress and containerized via Docker.
-Make commands are used to streamline everything from installation to testing to deployment.
+The AOV client is a modern React-based mapping tool:
 
-Prerequisites
+- **Tested with Cypress**
+- **Containerized via Docker**
+- **Makefile-managed commands for install, test, deploy**
 
-You will need:
+### ⚙️ Prerequisites
 
-Docker
+- Docker
+- Docker Compose
+- Node.js
+- npm
 
-Docker Compose
+#### Install dependencies:
 
-Node.js
-
-npm
-
-Install the application dependencies:
-
+```sh
 make install-app
+```
 
-Setup
+#### Clone & set up:
 
-Clone and install:
-
+```sh
 git clone <repository-url>
 cd <repository-directory>
 make install-app
+```
 
-Pre-Commit Checks
+### 🧑‍💻 Pre-Commit Checks
 
 Before committing, run:
 
+```sh
 make test-app
+```
 
+Runs:  
+• Code formatting  
+• License header checks  
+• Lint & type checks  
+• Unit/client tests  
+• Cypress E2E tests (Docker)  
+• Snapshot cleanup
 
-This runs:
+---
 
-Code formatting
+### Main Commands
 
-License header checks
+| Description               | Command                       |
+|---------------------------|-------------------------------|
+| Develop app               | `make develop`                |
+| Build client              | `make build`                  |
+| Install client deps       | `make install-client`         |
+| Linting                   | `make test-lint`              |
+| Type checking             | `make test-types`             |
 
-Lint & type checks
+### Cypress E2E
 
-Client tests
+| Description              | Command                        |
+|--------------------------|--------------------------------|
+| Open test UI             | `make open-test`               |
+| Install Cypress deps     | `make install-e2e-cypress`     |
+| Run e2e tests            | `make test-e2e-cypress`        |
+| Clean snapshots          | `make clean-snapshots`         |
 
-Cypress E2E tests (Dockerized)
+### Docker Commands
 
-Snapshot cleanup
+| Description          | Command                        |
+|----------------------|-------------------------------|
+| Build image          | `make docker-build`           |
+| Run all e2e tests    | `make test-e2e`               |
+| Update snapshots     | `make test-e2e-image-snapshots-update` |
 
-Client Commands
-make develop
-make build
-make install-client
-make test-lint
-make test-types
+---
 
-Cypress E2E Commands
-make open-test
-make install-e2e-cypress
-make test-e2e-cypress
-make clean-snapshots
+## Scripts (Python Utilities)
 
-Docker Commands
-make docker-build
-make test-e2e
-make test-e2e-image-snapshots-update
+Located in the `scripts/` folder.
 
+Typical operations:
 
-The complete E2E cycle with snapshot updates:
+- Normalize field names
+- Clean inconsistent/malformed entries
+- Standardize institution/agency names
+- Validate/fix geometry
+- Map ROR identifiers
+- Prepare final datasets
 
-make test-e2e-image-snapshots-update
+---
 
-Scripts (Python Utilities)
+## Related Tables (CSV ROR Mappings)
 
-The scripts/ folder contains Python utilities used for data preparation before ingestion into the AOV application.
+Maps institutions & agencies in the AOV dataset to their authoritative ROR entries.
 
-Typical operations include:
+Each table includes:
 
-Normalizing field names
+- **Normalized name**
+- **Site_ID** (links site → agency/institution)
+- **ROR ID**
 
-Cleaning inconsistent or malformed entries
+Ensures consistency across the full ecosystem.
 
-Standardizing institution & agency names
+---
 
-Validating and fixing geometry data
+## Unique Indexes
 
-Mapping entries to ROR identifiers
+The `unique_Tables/` folder includes comprehensive lists of unique Institutions, Agencies, and Principal Investigators.
 
-Preparing final datasets for production use
+Each CSV contains:
 
-Related Tables (CSV ROR Mappings)
+- ✔ Canonical (normalized) name
+- ✔ All known aliases
+- ✔ ROR ID (if available)
+- ✔ Boolean flag (ROR exists)
 
-These tables map institutions and funding agencies found in the AOV dataset to their authoritative entries in the Research Organization Registry (ROR).
+Used to:
 
-Each table typically includes:
+- De-duplicate naming conventions
+- Automate ROR matching
+- Maintain stable referential keys
+- Improve search/filter/visualization accuracy
 
-Normalized name
+---
 
-Site_ID (to form the link between site and agency/institution)
+## 📜 Licensing
 
-ROR ID
-
-These mappings ensure consistency across the full visualization ecosystem.
-
-Unique Indexes
-
-The unique-indexes/ folder contains comprehensive lists of all unique Institutions, Funding Agencies, and Principal Investigators found across the AOV dataset.
-
-Each CSV includes:
-
-✔ Canonical (normalized) name
-✔ All known aliases (as used across datasets)
-✔ ROR ID, when applicable
-✔ Boolean flag indicating whether a ROR exists
-
-This index is used to:
-
-De-duplicate inconsistent naming conventions
-
-Support automated ROR matching
-
-Maintain stable referential keys across the dataset
-
-Improve search, filtering, and visualization accuracy
-
-
-Licensing
-This software is Copyright ©️ 2020 
-The University of Texas at El Paso. 
-All Rights Reserved.
+_This software is Copyright ©️ 2020  
+The University of Texas at El Paso.  
+All Rights Reserved._
